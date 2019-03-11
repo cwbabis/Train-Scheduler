@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <title>Employee Data Management</title>
+</head>
+
+<body>
+    <div class="container">
+        <div style="background-color: black" class="jumbotron">
+            <h1 style="color: white;" class="display-4 text-center">Employee Data Management</h1>
+            <p style="color: white; " class="lead text-center">A Comprehensive Directory of Employess Billable Hours</p>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Current Employees
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Months Worked</th>
+                            <th scope="col">Monthly Rate ($)</th>
+                            <th scope="col">Total Billed ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-display">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+
+        <div class="card">
+            <div class="card-header">
+                Add Employee
+            </div>
+
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="empName">Employee Name</label>
+                        <input type="text" class="form-control" id="name-display" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label for="empRole">Role</label>
+                        <input type="text" class="form-control" id="role-display" placeholder="Enter role">
+                    </div>
+                    <div class="form-group">
+                        <label for="empStartDate">Start Date (MM/DD/YYYY)</label>
+                        <input type="text" class="form-control" id="start-date-display" placeholder="Enter start date">
+                    </div>
+                    <div class="form-group">
+                        <label for="empRate">Monthly Rate</label>
+                        <input type="text" class="form-control" id="month-rate-display" placeholder="Enter rate">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAOiC8VsmpoZmkq0Y5AOHMI-9t1Ua4D3Ok",
+                authDomain: "thomas-train-scheduler.firebaseapp.com",
+                databaseURL: "https://thomas-train-scheduler.firebaseio.com",
+                projectId: "thomas-train-scheduler",
+                storageBucket: "thomas-train-scheduler.appspot.com",
+                messagingSenderId: "92595246175"
+            };
+            firebase.initializeApp(config);
+            var database = firebase.database();
+
+
+            function childAdded() {
+                $("#table-display").empty();
+                database.ref().on("child_added", function (snapshot) {
+                    console.log(snapshot.val())
+                    var sv = snapshot.val();
+                    var name = sv.name;
+                    var role = sv.role;
+                    var startDate = sv.startDate;
+                    //var currTime = database.ServerValue.TIMESTAMP;
+                    //need to delete startdate from current time
+                    var monthsWorked = startDate;
+                    var monthlyRate = sv.monthlyRate;
+                    //total billed needs monthly rate *months worked
+                    var billed = monthlyRate;
+                    var row = $("<tr>");
+                    row.append("<td>" + name + "</td>");
+                    row.append("<td>" + role + "</td>");
+                    row.append("<td>" + startDate + "</td>");
+                    row.append("<td>" + monthsWorked + "</td>");
+                    row.append("<td>" + monthlyRate + "</td>");
+                    row.append("<td>" + monthsWorked + "</td>");
+                    $("#table-display").append(row);
+                })
+            };
+            childAdded();
+            $("#submit-btn").on("click", function (event) {
+                //prevent refresh
+                event.preventDefault();
+                //hold input values
+                var name = $("#name-display").val().trim();
+                var role = $("#role-display").val().trim();
+                var startDate = $("#start-date-display").val().trim();
+                var monthlyRate = $("#month-rate-display").val().trim();
+                //database push
+                database.ref().push({
+                    name: name,
+                    role: role,
+                    startDate: startDate,
+                    monthlyRate: monthlyRate,
+                    dateAdded: firebase.database.ServerValue.TIMESTAMP
+                });
+                childAdded();
+            });
+        </script>
+</body>
+
+</html>
