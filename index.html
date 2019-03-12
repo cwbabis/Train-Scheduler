@@ -13,6 +13,12 @@
 </head>
 
 <body>
+
+    <audio src="dankEngine.mp3" autoplay>
+        <p>If you are reading this, it is because your browser does not support the audio element. </p>
+        <embed src="dankEngine.mp3" width="180" height="90" hidden="true" />
+    </audio>
+
     <div class="container">
         <div style="background-color: black" class="jumbotron">
             <h1 style="color: white;" class="display-4 text-center">Employee Data Management</h1>
@@ -20,18 +26,17 @@
         </div>
         <div class="card">
             <div class="card-header">
-                Current Employees
+                Current Train Schedule
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Months Worked</th>
-                            <th scope="col">Monthly Rate ($)</th>
-                            <th scope="col">Total Billed ($)</th>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Frequency (min)</th>
+                            <th scope="col">Next Arrival</th>
+                            <th scope="col">Minutes Away</th>
                         </tr>
                     </thead>
                     <tbody id="table-display">
@@ -44,26 +49,26 @@
 
         <div class="card">
             <div class="card-header">
-                Add Employee
+                Add New Train
             </div>
 
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="empName">Employee Name</label>
-                        <input type="text" class="form-control" id="name-display" placeholder="Enter name">
+                        <label for="empName">Train Name</label>
+                        <input type="text" class="form-control" id="name-display" placeholder="Enter Train Name">
                     </div>
                     <div class="form-group">
-                        <label for="empRole">Role</label>
-                        <input type="text" class="form-control" id="role-display" placeholder="Enter role">
+                        <label for="empRole">Destination</label>
+                        <input type="text" class="form-control" id="role-display" placeholder="Enter destination">
                     </div>
                     <div class="form-group">
-                        <label for="empStartDate">Start Date (MM/DD/YYYY)</label>
-                        <input type="text" class="form-control" id="start-date-display" placeholder="Enter start date">
+                        <label for="empStartDate">First Train Time (HH:mm - military time)</label>
+                        <input type="text" class="form-control" id="start-date-display" placeholder="Enter First Train Time">
                     </div>
                     <div class="form-group">
-                        <label for="empRate">Monthly Rate</label>
-                        <input type="text" class="form-control" id="month-rate-display" placeholder="Enter rate">
+                        <label for="empRate">Frequency (min)</label>
+                        <input type="text" class="form-control" id="frequency-display" placeholder="Enter Frequency">
                     </div>
                     <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
                 </form>
@@ -99,16 +104,15 @@
                     //var currTime = database.ServerValue.TIMESTAMP;
                     //need to delete startdate from current time
                     var monthsWorked = startDate;
-                    var monthlyRate = sv.monthlyRate;
-                    //total billed needs monthly rate *months worked
-                    var billed = monthlyRate;
+                    var frequency = sv.frequency;
+
+                    var billed = frequency;
                     var row = $("<tr>");
                     row.append("<td>" + name + "</td>");
                     row.append("<td>" + role + "</td>");
                     row.append("<td>" + startDate + "</td>");
                     row.append("<td>" + monthsWorked + "</td>");
-                    row.append("<td>" + monthlyRate + "</td>");
-                    row.append("<td>" + monthsWorked + "</td>");
+                    row.append("<td>" + frequency + "</td>");
                     $("#table-display").append(row);
                 })
             };
@@ -120,13 +124,13 @@
                 var name = $("#name-display").val().trim();
                 var role = $("#role-display").val().trim();
                 var startDate = $("#start-date-display").val().trim();
-                var monthlyRate = $("#month-rate-display").val().trim();
+                var frequency = $("#frequency-display").val().trim();
                 //database push
                 database.ref().push({
                     name: name,
                     role: role,
                     startDate: startDate,
-                    monthlyRate: monthlyRate,
+                    frequency: frequency,
                     dateAdded: firebase.database.ServerValue.TIMESTAMP
                 });
                 childAdded();
