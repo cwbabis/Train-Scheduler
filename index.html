@@ -9,7 +9,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <title>Employee Data Management</title>
+    <link rel="stylesheet" type="text/css" href="./assets/Styling/style.css">
+    <title>Thomas & Friends</title>
 </head>
 
 <body>
@@ -20,7 +21,7 @@
     </audio>
 
     <div class="container">
-        <div style="background-color: blue" class="jumbotron">
+        <div id="main" style="background-color: blue" class="jumbotron">
             <h1 style="color: white;" class="display-4 text-center">Thomas & Friends Train Schedules</h1>
             <p style="color: white; " class="lead text-center">Travel the Island of Sodor</p>
         </div>
@@ -76,12 +77,36 @@
                 </form>
             </div>
 
+
+            <nav style="background-color: rgba(0, 0, 0, 0.3);" class="navbar fixed-bottom navbar-dark">
+                <div class="container" id=bottomIcons>
+
+                    <a class="navbar-brand" href="#"></a>
+                    <span>
+                        <a href="https://www.linkedin.com/in/christopher-babis-332a12178/"><i
+                                class="fab fa-linkedin fa-2x" style="color:white"></i></a>
+                    </span>
+                    <span>
+                        <a href="https://www.facebook.com/ChrisBabis"><i class="fab fa-facebook fa-2x"
+                                style="color:white"></i></a>
+                    </span>
+                    <span>
+                        <a href="https://github.com/cwbabis"><i class="fab fa-github-square fa-2x"
+                                style="color:white"></i></a>
+                    </span>
+                    <span>
+                        <a href="https://stackoverflow.com/users/10891839/cwbabis?tab=profile"><i
+                                class="fab fa-stack-overflow fa-2x" style="color:white"></i></a>
+                    </span>
+            </nav>
+
         </div>
         <script src="https://code.jquery.com/jquery.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
-        <script>
+        <script type="text/javascript" src="./assets/JavaScript/app.js"></script>
+        <!-- <script>
             // Initialize Firebase
             var config = {
                 apiKey: "AIzaSyAOiC8VsmpoZmkq0Y5AOHMI-9t1Ua4D3Ok",
@@ -135,8 +160,6 @@
                     var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
                     row.append("<td>" + nextTrain + "</td>");
 
-
-
                     $("#table-display").append(row);
                 })
             };
@@ -159,9 +182,7 @@
                 });
                 childAdded();
             });
-
-
-        </script>
+        </script> -->
 </body>
 
 </html>

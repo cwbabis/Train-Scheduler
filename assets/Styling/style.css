@@ -1,0 +1,12 @@
+@font-face{
+    font-family: tfFontimport;
+    src:url("tfFont.ttf")
+}
+
+#main{
+    font-family:tfFontimport;
+}
+body {
+    background-image: url(../Images/thomas.jpg);
+    background-size: cover;
+}
