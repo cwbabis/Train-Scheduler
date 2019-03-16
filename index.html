@@ -112,9 +112,11 @@
                     var row = $("<tr>");
                     row.append("<td>" + name + "</td>");
                     row.append("<td>" + destination + "</td>");
+                    row.append("<td>" + frequency + "</td>");
 
+                    // Time is 3:30 AM
                     var firstTime = "03:30";
-
+                    
                     var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
                     console.log(firstTimeConverted);
 
@@ -132,6 +134,8 @@
 
                     var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
                     row.append("<td>" + nextTrain + "</td>");
+
+
 
                     $("#table-display").append(row);
                 })
