@@ -20,9 +20,9 @@
     </audio>
 
     <div class="container">
-        <div style="background-color: black" class="jumbotron">
-            <h1 style="color: white;" class="display-4 text-center">Employee Data Management</h1>
-            <p style="color: white; " class="lead text-center">A Comprehensive Directory of Employess Billable Hours</p>
+        <div style="background-color: blue" class="jumbotron">
+            <h1 style="color: white;" class="display-4 text-center">Thomas & Friends Train Schedules</h1>
+            <p style="color: white; " class="lead text-center">Travel the Island of Sodor</p>
         </div>
         <div class="card">
             <div class="card-header">
@@ -35,8 +35,8 @@
                             <th scope="col">Train Name</th>
                             <th scope="col">Destination</th>
                             <th scope="col">Frequency (min)</th>
-                            <th scope="col">Next Arrival</th>
                             <th scope="col">Minutes Away</th>
+                            <th scope="col">Next Arrival</th>
                         </tr>
                     </thead>
                     <tbody id="table-display">
@@ -55,20 +55,22 @@
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="empName">Train Name</label>
+                        <label for="trainName">Train Name</label>
                         <input type="text" class="form-control" id="name-display" placeholder="Enter Train Name">
                     </div>
                     <div class="form-group">
-                        <label for="empRole">Destination</label>
-                        <input type="text" class="form-control" id="role-display" placeholder="Enter destination">
+                        <label for="trainDestination">Destination</label>
+                        <input type="text" class="form-control" id="destination-display"
+                            placeholder="Enter Destination">
                     </div>
                     <div class="form-group">
-                        <label for="empStartDate">First Train Time (HH:mm - military time)</label>
-                        <input type="text" class="form-control" id="start-date-display" placeholder="Enter First Train Time">
-                    </div>
-                    <div class="form-group">
-                        <label for="empRate">Frequency (min)</label>
+                        <label for="trainRate">Frequency (min)</label>
                         <input type="text" class="form-control" id="frequency-display" placeholder="Enter Frequency">
+                    </div>
+                    <div class="form-group">
+                        <label for="trainStartTime">First Train Time (HH:mm - military time)</label>
+                        <input type="text" class="form-control" id="start-date-display"
+                            placeholder="Enter First Train Time">
                     </div>
                     <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
                 </form>
@@ -99,20 +101,38 @@
                     console.log(snapshot.val())
                     var sv = snapshot.val();
                     var name = sv.name;
-                    var role = sv.role;
+                    var destination = sv.destination;
                     var startDate = sv.startDate;
                     //var currTime = database.ServerValue.TIMESTAMP;
                     //need to delete startdate from current time
-                    var monthsWorked = startDate;
+                    var nextArrival = startDate;
                     var frequency = sv.frequency;
 
-                    var billed = frequency;
+                    /* var billed = frequency; */
                     var row = $("<tr>");
                     row.append("<td>" + name + "</td>");
-                    row.append("<td>" + role + "</td>");
-                    row.append("<td>" + startDate + "</td>");
-                    row.append("<td>" + monthsWorked + "</td>");
-                    row.append("<td>" + frequency + "</td>");
+                    row.append("<td>" + destination + "</td>");
+
+                    var firstTime = "03:30";
+
+                    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+                    console.log(firstTimeConverted);
+
+                    var currentTime = moment();
+                    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+                    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+                    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+                    var tRemainder = diffTime % frequency;
+                    console.log(tRemainder);
+
+                    var tMinutesTillTrain = frequency - tRemainder;
+                    row.append("<td>" + tMinutesTillTrain + ' Minute(s)' + "</td>");
+
+                    var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
+                    row.append("<td>" + nextTrain + "</td>");
+
                     $("#table-display").append(row);
                 })
             };
@@ -122,19 +142,21 @@
                 event.preventDefault();
                 //hold input values
                 var name = $("#name-display").val().trim();
-                var role = $("#role-display").val().trim();
+                var destination = $("#destination-display").val().trim();
                 var startDate = $("#start-date-display").val().trim();
                 var frequency = $("#frequency-display").val().trim();
                 //database push
                 database.ref().push({
                     name: name,
-                    role: role,
+                    destination: destination,
                     startDate: startDate,
                     frequency: frequency,
                     dateAdded: firebase.database.ServerValue.TIMESTAMP
                 });
                 childAdded();
             });
+
+
         </script>
 </body>
 
