@@ -9,27 +9,31 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./assets/Styling/style.css">
     <title>Thomas & Friends</title>
 </head>
 
 <body>
 
-    <audio src="dankEngine.mp3" autoplay>
-        <p>If you are reading this, it is because your browser does not support the audio element. </p>
-        <embed src="dankEngine.mp3" width="180" height="90" hidden="true" />
-    </audio>
-
     <div class="container">
-        <div id="main" style="background-color: blue" class="jumbotron">
+        <div class="jumbotron see-through">
             <h1 style="color: white;" class="display-4 text-center">Thomas & Friends Train Schedules</h1>
             <p style="color: white; " class="lead text-center">Travel the Island of Sodor</p>
+            <hr>
+            <div id="musicControls" class="text-center">
+                <button class="btn btn-primary btn-xs theme-button">
+                    <span class="fa fa-music"></span> Play Theme!</button>
+                <button class="btn btn-danger btn-xs pause-button">
+                    <span class="fa fa-pause"></span> Pause Song</button>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-header">
+        <div class="card see-through">
+            <div class="card-header headers">
                 Current Train Schedule
             </div>
-            <div class="card-body">
+            <div class="card-body bodies">
                 <table class="table">
                     <thead>
                         <tr>
@@ -48,12 +52,12 @@
         </div>
         <br>
 
-        <div class="card">
-            <div class="card-header">
+        <div class="card see-through">
+            <div class="card-header headers">
                 Add New Train
             </div>
 
-            <div class="card-body">
+            <div class="card-body bodies">
                 <form>
                     <div class="form-group">
                         <label for="trainName">Train Name</label>
@@ -101,7 +105,26 @@
             </nav>
 
         </div>
+        <br><br><br>
         <script src="https://code.jquery.com/jquery.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                // Gets Link for Theme Song
+                var audioElement = document.createElement("audio");
+                audioElement.setAttribute("src", "dankEngine.mp3");
+
+                // Theme Button
+                $(".theme-button").on("click", function () {
+                    audioElement.play();
+                });
+                $(".pause-button").on("click", function () {
+                    audioElement.pause();
+                });
+
+            });
+        </script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>

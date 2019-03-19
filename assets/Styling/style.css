@@ -1,12 +1,29 @@
-@font-face{
-    font-family: tfFontimport;
-    src:url("tfFont.ttf")
-}
-
-#main{
-    font-family:tfFontimport;
-}
 body {
     background-image: url(../Images/thomas.jpg);
     background-size: cover;
+}
+.headers{
+    background-color: rgba(225, 0, 0, 0.5);
+    color: white;
+}
+.bodies{
+    background-color: rgba(0 ,0 ,0 0.5);
+}
+#bottomIcons {
+    width: 182px;
+}
+.see-through {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+label{
+    color: white;
+}
+th{
+    color: white;
+}
+td{
+    color: white;
+}
+hr{
+    color: white;
 }
