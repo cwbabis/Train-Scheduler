@@ -1,29 +1,45 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(tfFont.ttf);
+}
+.thomasText{
+    font-family: myFirstFont;
+}
 body {
     background-image: url(../Images/thomas.jpg);
     background-size: cover;
 }
-.headers{
+
+.headers {
     background-color: rgba(225, 0, 0, 0.5);
     color: white;
 }
-.bodies{
-    background-color: rgba(0 ,0 ,0 0.5);
+
+.bodies {
+    background-color: rgba(0, 0, 0 0.5);
 }
+
 #bottomIcons {
     width: 182px;
 }
+
 .see-through {
     background-color: rgba(0, 0, 0, 0.5);
 }
-label{
+
+label {
     color: white;
 }
-th{
+
+th {
+    color: white;
+    /* font-family: myFirstFont; */
+}
+
+td {
     color: white;
 }
-td{
-    color: white;
-}
-hr{
+
+hr {
     color: white;
 }
