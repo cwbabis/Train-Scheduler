@@ -22,7 +22,7 @@ https://cwbabis.github.io/Train-Scheduler/
 * jQuery
 
 
-Here's a preview of the site
+Here's a preview of the site:
 
 ![](thomasPreview.png "png")
 
